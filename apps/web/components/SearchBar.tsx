@@ -9,11 +9,11 @@ interface Props {
 }
 
 export default function SearchBar({ value, onChange }: Props) {
-  const [local, setLocal] = useState(value);
+  const [local, setLocal] = useState(value || "");
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
-    setLocal(value);
+    setLocal(value || "");
   }, [value]);
 
   const handleChange = (v: string) => {
