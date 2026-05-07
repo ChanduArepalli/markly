@@ -1,0 +1,21 @@
+.shell {
+  display: flex;
+  min-height: 100dvh;
+}
+
+.main {
+  flex: 1;
+  margin-left: 240px;
+  transition: margin-left 0.25s ease;
+  min-width: 0;
+}
+
+.mainExpanded {
+  margin-left: 0;
+}
+
+@media (max-width: 768px) {
+  .main {
+    margin-left: 0;
+  }
+}

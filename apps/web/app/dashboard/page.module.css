@@ -1,0 +1,178 @@
+.page {
+  padding: 32px;
+  max-width: 1200px;
+}
+
+/* ── Header ─────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: var(--font-family-display);
+}
+
+.count {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── Collection filter bar ───────────────────────────────────────── */
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.collPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 99px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 12.5px;
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.collPill:hover {
+  border-color: var(--col-c, var(--color-accent));
+  color: var(--col-c, var(--color-accent));
+  background: color-mix(in srgb, var(--col-c, var(--color-accent)) 8%, transparent);
+}
+
+.collPillActive {
+  border-color: var(--col-c, var(--color-accent));
+  color: var(--col-c, var(--color-accent));
+  background: color-mix(in srgb, var(--col-c, var(--color-accent)) 14%, transparent);
+  font-weight: 500;
+}
+
+.collPillIcon {
+  font-size: 13px;
+  line-height: 1;
+}
+
+/* ── Sub-filter row ──────────────────────────────────────────────── */
+.subFilters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+  padding: 6px 10px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.subFilterGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.subFilterDivider {
+  width: 1px;
+  height: 18px;
+  background: var(--color-border);
+  margin: 0 4px;
+}
+
+/* Status pills (All / Pinned / Unread) */
+.subPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 12.5px;
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  white-space: nowrap;
+}
+
+.subPill:hover {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.subPillActive {
+  background: var(--color-accent-glow);
+  color: var(--color-accent);
+  border-color: rgba(20, 184, 166, 0.3);
+  font-weight: 500;
+}
+
+/* Tag pills inside sub-filter row */
+.tagPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 12.5px;
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.tagPill:hover {
+  border-color: var(--tag-color, var(--color-accent));
+  color: var(--tag-color, var(--color-accent));
+}
+
+.tagPillActive {
+  background: color-mix(in srgb, var(--tag-color, var(--color-accent)) 14%, transparent);
+  border-color: var(--tag-color, var(--color-accent));
+  color: var(--tag-color, var(--color-accent));
+  font-weight: 500;
+}
+
+/* Shared dot + count */
+.tagDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pillCount {
+  font-size: 11px;
+  opacity: 0.65;
+}

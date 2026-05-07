@@ -1,0 +1,229 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 24px;
+  animation: fadeIn 0.15s ease;
+}
+
+.modal {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 460px;
+  animation: fadeUp 0.2s ease;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 22px 0;
+}
+
+.title {
+  font-family: var(--font-family-display);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.closeBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s ease;
+}
+.closeBtn:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-muted);
+}
+
+.form {
+  padding: 18px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Name row ────────────────────────────────────────────── */
+.nameRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.iconPreview {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-md);
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.nameField {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* ── Fields ──────────────────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.textarea {
+  resize: none;
+  min-height: 60px;
+}
+
+/* ── Icon picker ─────────────────────────────────────────── */
+.iconPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.iconOption {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  font-size: 17px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s ease;
+}
+.iconOption:hover {
+  border-color: var(--color-text-muted);
+  background: var(--color-surface-2);
+}
+.iconOptionActive {
+  border-width: 2px;
+}
+
+/* ── Color picker ────────────────────────────────────────── */
+.colorPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.colorSwatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  outline: none;
+}
+.colorSwatch:hover {
+  transform: scale(1.15);
+}
+.colorSwatchActive {
+  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px currentColor;
+  transform: scale(1.1);
+}
+
+/* ── Public toggle ───────────────────────────────────────── */
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  transition: border-color 0.15s ease;
+}
+.toggleRow:hover {
+  border-color: var(--color-text-muted);
+}
+
+.toggleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.toggleLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+.toggleSub {
+  font-size: 11px;
+  color: var(--color-text-faint);
+}
+
+.toggle {
+  width: 38px;
+  height: 22px;
+  border-radius: 99px;
+  background: var(--color-border);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+.toggleThumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.toggleOn .toggleThumb {
+  transform: translateX(16px);
+}
+
+/* ── Error + footer ──────────────────────────────────────── */
+.error {
+  color: #f87171;
+  font-size: 12.5px;
+  padding: 9px 12px;
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  border-radius: var(--radius-sm);
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 2px;
+}
+
+.footer .btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -1,0 +1,232 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 24px;
+  animation: fadeIn 0.15s ease;
+}
+
+.modal {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 520px;
+  max-height: 92dvh;
+  overflow-y: auto;
+  animation: fadeUp 0.2s ease;
+}
+
+/* ── Header ────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 24px 0;
+  position: sticky;
+  top: 0;
+  background: var(--color-surface);
+  z-index: 1;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.title {
+  font-size: 17px;
+  font-family: var(--font-family-display);
+  font-weight: 600;
+}
+
+.closeBtn {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s ease;
+}
+.closeBtn:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-muted);
+}
+
+/* ── Form ──────────────────────────────────────────────────── */
+.form {
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  color: var(--color-text-faint);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* ── URL preview (edit mode) ────────────────────────────────── */
+.urlPreview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+}
+.urlLink {
+  font-size: 13px;
+  color: var(--color-accent);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.urlLink:hover { text-decoration: underline; }
+
+/* ── Collection picker ──────────────────────────────────────── */
+.collectionPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.collectionChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.collectionChip:hover {
+  border-color: var(--cc, var(--color-accent));
+  color: var(--cc, var(--color-accent));
+  background: color-mix(in srgb, var(--cc, var(--color-accent)) 8%, transparent);
+}
+
+.collectionChipActive {
+  border-color: var(--cc, var(--color-accent));
+  color: var(--cc, var(--color-accent));
+  background: color-mix(in srgb, var(--cc, var(--color-accent)) 14%, transparent);
+  font-weight: 500;
+}
+
+.collectionChipIcon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* ── Tag picker ─────────────────────────────────────────────── */
+.tagPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tagChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border-radius: 99px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 12.5px;
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tagChip:hover {
+  border-color: var(--tag-c);
+  color: var(--tag-c);
+  background: color-mix(in srgb, var(--tag-c) 8%, transparent);
+}
+
+.tagChipActive {
+  border-color: var(--tag-c);
+  color: var(--tag-c);
+  background: color-mix(in srgb, var(--tag-c) 16%, transparent);
+  font-weight: 500;
+}
+
+/* ── Loading skeletons ──────────────────────────────────────── */
+.loadingRow {
+  display: flex;
+  gap: 8px;
+}
+.skeletonPill {
+  height: 32px;
+  width: 80px;
+  border-radius: 99px;
+}
+
+/* ── Empty hint ─────────────────────────────────────────────── */
+.emptyHint {
+  font-size: 12px;
+  color: var(--color-text-faint);
+  font-style: italic;
+  padding: 4px 0;
+}
+
+/* ── Error ──────────────────────────────────────────────────── */
+.error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #f87171;
+  font-size: 13px;
+  padding: 10px 14px;
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  border-radius: var(--radius-sm);
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 4px;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.footer button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
