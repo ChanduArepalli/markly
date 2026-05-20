@@ -120,14 +120,27 @@ def get_current_user(request: Request, db: Session) -> User:
 # ── Cookie helpers ────────────────────────────────────────────────
 
 def set_auth_cookies(response, access_token: str, refresh_token: str) -> None:
-    response.set_cookie("access_token", access_token,
+    domain = settings.COOKIE_DOMAIN.strip() if settings.COOKIE_DOMAIN else None
+    
+    response.set_cookie(
+        "access_token", access_token,
         max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
-        httponly=True, secure=settings.COOKIE_SECURE, samesite=settings.COOKIE_SAMESITE)
-    response.set_cookie("refresh_token", refresh_token,
+        httponly=True,
+        secure=settings.COOKIE_SECURE,
+        samesite=settings.COOKIE_SAMESITE,
+        domain=domain
+    )
+    response.set_cookie(
+        "refresh_token", refresh_token,
         max_age=settings.REFRESH_TOKEN_EXPIRE_DAYS * 86400,
-        httponly=True, secure=settings.COOKIE_SECURE, samesite=settings.COOKIE_SAMESITE)
+        httponly=True,
+        secure=settings.COOKIE_SECURE,
+        samesite=settings.COOKIE_SAMESITE,
+        domain=domain
+    )
 
 
 def clear_auth_cookies(response) -> None:
-    response.delete_cookie("access_token")
-    response.delete_cookie("refresh_token")
+    domain = settings.COOKIE_DOMAIN.strip() if settings.COOKIE_DOMAIN else None
+    response.delete_cookie("access_token", domain=domain)
+    response.delete_cookie("refresh_token", domain=domain)

@@ -2,12 +2,14 @@ import re
 from typing import Optional
 from pydantic import EmailStr
 from sqlmodel import SQLModel, Field
+from models.user import UserRead
 
 
 class RegisterRequest(SQLModel):
     email: EmailStr
     password: str = Field(min_length=8, max_length=100)
     full_name: str = Field(min_length=1, max_length=255)
+    recaptcha_token: Optional[str] = None
 
     @classmethod
     def validate_password_strength(cls, v: str) -> str:
@@ -28,6 +30,7 @@ class RegisterRequest(SQLModel):
 class LoginRequest(SQLModel):
     email: EmailStr
     password: str
+    recaptcha_token: Optional[str] = None
 
 
 class GoogleAuthURL(SQLModel):
@@ -37,6 +40,9 @@ class GoogleAuthURL(SQLModel):
 class TokenResponse(SQLModel):
     token_type: str = "bearer"
     message: str = "Authentication successful"
+    access_token: Optional[str] = None
+    refresh_token: Optional[str] = None
+    user: Optional[UserRead] = None
 
 
 class ChangePasswordRequest(SQLModel):

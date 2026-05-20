@@ -44,5 +44,9 @@ class Settings(BaseSettings):
     ADMIN_USERNAME: str = "admin"
     ADMIN_PASSWORD: str = "admin"
 
+    # reCAPTCHA
+    RECAPTCHA_SECRET_KEY: Optional[str] = None
+    RECAPTCHA_MIN_SCORE: float = 0.5
+
 
 settings = Settings()

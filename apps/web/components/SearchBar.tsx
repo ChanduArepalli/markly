@@ -9,16 +9,16 @@ interface Props {
 }
 
 export default function SearchBar({ value, onChange }: Props) {
-  const [local, setLocal] = useState(value);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const [local, setLocal] = useState(value || "");
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
 
   useEffect(() => {
-    setLocal(value);
+    setLocal(value || "");
   }, [value]);
 
   const handleChange = (v: string) => {
     setLocal(v);
-    clearTimeout(timerRef.current);
+    clearTimeout(timerRef.current!);
     timerRef.current = setTimeout(() => onChange(v), 300);
   };
 

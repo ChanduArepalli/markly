@@ -73,16 +73,16 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
 // ── Auth ──────────────────────────────────────────────────────────
 
 export const auth = {
-  register: (email: string, password: string, full_name: string) =>
-    request<User>("/api/v1/auth/register", {
+  register: (email: string, password: string, full_name: string, recaptcha_token?: string) =>
+    request<any>("/api/v1/auth/register", {
       method: "POST",
-      body: JSON.stringify({ email, password, full_name }),
+      body: JSON.stringify({ email, password, full_name, recaptcha_token }),
     }),
 
-  login: (email: string, password: string) =>
+  login: (email: string, password: string, recaptcha_token?: string) =>
     request("/api/v1/auth/login", {
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, recaptcha_token }),
     }),
 
   googleAuthUrl: () => request<{ auth_url: string }>("/api/v1/auth/google"),
@@ -98,6 +98,8 @@ export const auth = {
       method: "PUT",
       body: JSON.stringify({ current_password, new_password }),
     }),
+
+  deleteAccount: () => request("/api/v1/auth/me", { method: "DELETE" }),
 };
 
 // ── Bookmarks ─────────────────────────────────────────────────────

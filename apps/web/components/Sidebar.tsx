@@ -264,7 +264,7 @@ export default function Sidebar({ open, onToggle }: Props) {
         {/* Footer */}
         <div className={styles.footer}>
           {user && (
-            <div className={styles.userRow}>
+            <Link href="/profile" className={styles.userRowLink} title="Account Settings">
               {user.avatar_url ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={user.avatar_url} alt="" className={styles.avatar} width={28} height={28} />
@@ -275,7 +275,7 @@ export default function Sidebar({ open, onToggle }: Props) {
                 <span className={styles.userName}>{user.full_name ?? "User"}</span>
                 <span className={styles.userEmail}>{user.email}</span>
               </div>
-            </div>
+            </Link>
           )}
           <button id="btn-logout" className={`btn btn-ghost ${styles.logoutBtn}`} onClick={handleLogout}>
             Sign out
