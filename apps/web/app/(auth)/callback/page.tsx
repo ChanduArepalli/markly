@@ -1,16 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function AuthCallbackPage() {
+function CallbackHandler() {
   const router = useRouter();
   const params = useSearchParams();
 
   useEffect(() => {
-    // The backend sets cookies and redirects here with ?status=ok
-    // or the OAuth callback redirects directly to /dashboard
     const status = params.get("status");
+    const token = params.get("token");
+
+    if (token) {
+      document.cookie = `access_token=${token}; path=/; max-age=${15 * 60}; samesite=lax; secure`;
+    }
+
     if (status === "error") {
       router.push("/?error=oauth_failed");
     } else {
@@ -19,10 +23,22 @@ export default function AuthCallbackPage() {
   }, [params, router]);
 
   return (
+    <p style={{ color: "var(--color-text-muted)", fontFamily: "var(--font-family-sans)" }}>
+      Completing sign-in…
+    </p>
+  );
+}
+
+export default function AuthCallbackPage() {
+  return (
     <main style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100dvh" }}>
-      <p style={{ color: "var(--color-text-muted)", fontFamily: "var(--font-family-sans)" }}>
-        Completing sign-in…
-      </p>
+      <Suspense fallback={
+        <p style={{ color: "var(--color-text-muted)", fontFamily: "var(--font-family-sans)" }}>
+          Loading…
+        </p>
+      }>
+        <CallbackHandler />
+      </Suspense>
     </main>
   );
 }

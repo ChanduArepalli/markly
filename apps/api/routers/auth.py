@@ -13,6 +13,7 @@ from services.auth import (
     get_current_user, set_auth_cookies, clear_auth_cookies,
 )
 from services.oauth import get_google_auth_url, exchange_google_code
+from services.recaptcha import verify_recaptcha
 from config import settings
 
 router = APIRouter()
@@ -20,8 +21,9 @@ router = APIRouter()
 
 # ── Register (email/password) ─────────────────────────────────────
 
-@router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
+@router.post("/register", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
 async def register(body: RegisterRequest, response: Response, db: Session = Depends(get_db)):
+    await verify_recaptcha(body.recaptcha_token, "register")
     existing = db.exec(select(User).where(User.email == body.email)).first()
     if existing:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already registered")
@@ -42,13 +44,14 @@ async def register(body: RegisterRequest, response: Response, db: Session = Depe
     access_token = create_access_token(user.id, user.email)
     refresh_token = create_refresh_token_record(db, user.id)
     set_auth_cookies(response, access_token, refresh_token)
-    return user
+    return TokenResponse(user=user, access_token=access_token, refresh_token=refresh_token)
 
 
 # ── Login (email/password) ────────────────────────────────────────
 
 @router.post("/login", response_model=TokenResponse)
 async def login(body: LoginRequest, response: Response, db: Session = Depends(get_db)):
+    await verify_recaptcha(body.recaptcha_token, "login")
     user = db.exec(select(User).where(User.email == body.email)).first()
     if not user or not user.hashed_password or not verify_password(body.password, user.hashed_password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password")
@@ -58,7 +61,7 @@ async def login(body: LoginRequest, response: Response, db: Session = Depends(ge
     access_token = create_access_token(user.id, user.email)
     refresh_token = create_refresh_token_record(db, user.id)
     set_auth_cookies(response, access_token, refresh_token)
-    return TokenResponse()
+    return TokenResponse(user=user, access_token=access_token, refresh_token=refresh_token)
 
 
 # ── Google OAuth ──────────────────────────────────────────────────
@@ -108,7 +111,12 @@ async def google_callback(code: str, response: Response, db: Session = Depends(g
     access_token = create_access_token(user.id, user.email)
     refresh_token = create_refresh_token_record(db, user.id)
 
-    redirect = RedirectResponse(url=f"{settings.FRONTEND_URL}/dashboard", status_code=302)
+    # Redirect to the frontend callback page with the token
+    # The frontend will then save this to its own domain's cookie
+    redirect = RedirectResponse(
+        url=f"{settings.FRONTEND_URL}/callback?token={access_token}&status=ok", 
+        status_code=302
+    )
     set_auth_cookies(redirect, access_token, refresh_token)
     return redirect
 
@@ -166,3 +174,17 @@ async def change_password(
     user.hashed_password = hash_password(body.new_password)
     db.add(user)
     db.commit()
+
+
+# ── Delete Account ────────────────────────────────────────────────
+
+@router.delete("/me", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_account(
+    request: Request,
+    response: Response,
+    db: Session = Depends(get_db),
+):
+    user = get_current_user(request, db)
+    db.delete(user)
+    db.commit()
+    clear_auth_cookies(response)
